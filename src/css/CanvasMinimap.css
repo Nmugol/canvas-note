@@ -1,0 +1,51 @@
+/* CanvasMinimap.css */
+
+.canvas-minimap-container {
+	position: absolute;
+	bottom: 84px;
+	right: 24px;
+	width: 180px;
+	height: 135px;
+	border-radius: 12px;
+	border: 1px solid #e2e8f0;
+	background-color: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(8px);
+	box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	overflow: hidden;
+	pointer-events: none; /* Let clicks pass through to the canvas */
+	z-index: 999;
+	display: flex;
+	flex-direction: column;
+	transition: opacity 0.2s ease-in-out, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.dark .canvas-minimap-container {
+	border-color: #334155;
+	background-color: rgba(30, 41, 59, 0.95);
+}
+
+.canvas-minimap-label {
+	position: absolute;
+	top: 6px;
+	left: 8px;
+	font-size: 9px;
+	font-weight: 700;
+	color: #94a3b8;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	user-select: none;
+	pointer-events: none;
+}
+
+.canvas-minimap-svg {
+	width: 100%;
+	height: 100%;
+}
+
+.canvas-minimap-bg-rect {
+	fill: #fafafa;
+}
+
+.dark .canvas-minimap-bg-rect {
+	fill: #1e293b;
+}
