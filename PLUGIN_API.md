@@ -97,7 +97,7 @@ const ClockRenderer: React.FC<PluginBlockProps> = ({ block, isSelected }) => {
 // 2. The Plugin Definition
 export const ClockPlugin: CanvasNotePlugin = {
     id: "clock",
-    nameKey: "clockPlugin", // Ensure you add "clockPlugin" to translations
+    nameKey: "clockPlugin",
     icon: AccessTimeIcon,
     defaultSize: { width: 250, height: 100 },
     
