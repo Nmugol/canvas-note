@@ -57,7 +57,7 @@ The compiled binaries will be available in `src-tauri/target/release/`.
 Canvas Note features an external plugin architecture. The application loads `.js` files natively from the OS-specific plugins folder.
 To view or install plugins, open the **Settings -> Plugins** tab in the application and click **"Open plugins folder"** .
 
-Plugins must follow the standard Canvas Note plugin API to register new block types, tools, or behaviors.
+Plugins must follow the standard Canvas Note plugin API to register new block types, tools, or behaviors. For detailed instructions and examples on creating custom plugins, please refer to the **[Plugin API Documentation](PLUGIN_API.md)**.
 
 ## 📝 Keyboard Shortcuts
 
