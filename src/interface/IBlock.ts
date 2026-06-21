@@ -2,7 +2,7 @@ import { EBlockType } from "../enums/EBlockType";
 
 export interface IBlock {
 	id: string;
-	type: EBlockType;
+	type: EBlockType | string;
 	content: string;
 	position: {
 		x: number;

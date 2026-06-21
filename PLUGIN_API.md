@@ -131,4 +131,47 @@ You **do not** need to manually modify `src/plugins/index.ts`. Simply save your 
 The application includes an **External Plugin Loader** (`src/utils/ExternalPluginLoader.ts`). 
 External plugins are `.js` files dropped into the global OS plugins directory (accessible via the `Settings -> Plugins` menu). 
 
-When compiled, external plugins must attach themselves to the global scope (e.g., `window.CanvasNotePluginRegistry.register(MyPlugin)`) so the application can dynamically load them at runtime without recompiling the app.
+When compiled, external plugins must attach themselves to the global scope so the application can dynamically load them at runtime without recompiling the app.
+
+**Important**: Because the browser executes external plugins at runtime, **they cannot contain raw JSX or TypeScript**. They must either be written in plain JavaScript using `React.createElement`, or be bundled (e.g. via Webpack/Vite) into a single `.js` file.
+
+To help with this, the application exposes `React`, Material-UI components, and internal classes globally under `window.CanvasNote`:
+
+```javascript
+(function() {
+    const React = window.CanvasNote.React;
+    const BaseBlock = window.CanvasNote.BaseBlock;
+    const MuiIcons = window.CanvasNote.MuiIcons;
+
+    const DemoRenderer = (props) => {
+        return React.createElement('div', {
+            style: { padding: '20px', background: '#e0e0e0', height: '100%' }
+        }, "Hello from External Plugin!");
+    };
+
+    const DemoPlugin = {
+        id: "external-demo",
+        nameKey: "externalDemoPlugin",
+        icon: MuiIcons.Extension,
+        defaultSize: { width: 200, height: 100 },
+        
+        createModel: (params) => {
+            return new BaseBlock(
+                params.id,
+                "external-demo",
+                params.position.x,
+                params.position.y,
+                params.size?.width ?? 200,
+                params.size?.height ?? 100,
+                params.content,
+                params.metadata
+            );
+        },
+        
+        renderBlock: (props) => React.createElement(DemoRenderer, props)
+    };
+
+    // Register plugin with the app
+    window.CanvasNote.registerPlugin(DemoPlugin);
+})();
+```

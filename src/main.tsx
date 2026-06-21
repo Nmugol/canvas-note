@@ -13,6 +13,7 @@ import { SettingsProvider, useSettings } from "./context/SettingsContext";
 import { translations } from "./utils/translations";
 import { pluginRegistry } from "./utils/PluginRegistry";
 import { getExternalPluginPaths } from "./utils/ExternalPluginLoader";
+import { BaseBlock } from "./models/BaseBlock";
 import "./plugins";
 
 // Expose React, MUI, and registration API to external scripts
@@ -20,6 +21,7 @@ import "./plugins";
 	React,
 	Mui,
 	MuiIcons,
+	BaseBlock,
 	registerPlugin: (plugin: any) => pluginRegistry.register(plugin)
 };
 
@@ -62,13 +64,17 @@ function AppWrapper() {
 
 	React.useEffect(() => {
 		async function loadPlugins() {
-			const paths = await getExternalPluginPaths();
-			for (const path of paths) {
-				try {
-					await loadExternalPlugin(path);
-				} catch (err) {
-					console.error(`Failed to load plugin at ${path}:`, err);
+			try {
+				const paths = await getExternalPluginPaths();
+				for (const path of paths) {
+					try {
+						await loadExternalPlugin(path);
+					} catch (err) {
+						console.error(`Failed to load plugin at ${path}:`, err);
+					}
 				}
+			} catch (e) {
+				console.error("Błąd getExternalPluginPaths: ", e);
 			}
 			setPluginsLoaded(true);
 		}
